@@ -1,8 +1,14 @@
 import { useState } from "react";
-import { UserOutlined } from "@ant-design/icons";
-import { Layout, Menu } from "antd";
+import {
+  UserOutlined,
+  LogoutOutlined,
+  VideoCameraOutlined,
+  DesktopOutlined,
+} from "@ant-design/icons";
+import { Layout, Menu, theme, Dropdown, Avatar } from "antd";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
-import { Content } from "antd/es/layout/layout";
+import { Header, Content } from "antd/es/layout/layout";
+import NavBarAdmin from "../components/Header/NavBarAdmin";
 const { Sider } = Layout;
 
 function getItem(label, key, icon, children) {
@@ -14,19 +20,23 @@ function getItem(label, key, icon, children) {
   };
 }
 const items = [
+  getItem(<NavLink to="/admin">Users</NavLink>, "/admin", <UserOutlined />),
   getItem(
-    <NavLink to="/admin">Quản lý user</NavLink>,
-    "/admin",
-    <UserOutlined />
+    <NavLink to="/admin/movie">Films</NavLink>,
+    "/admin/movie",
+    <VideoCameraOutlined />
   ),
   getItem(
-    <NavLink to="/admin/movie">Quản lý phim</NavLink>,
+    <NavLink to="">Showtime</NavLink>,
     "/admin/movie",
-    <UserOutlined />
+    <DesktopOutlined />
   ),
 ];
 
 const AdminTemplate = () => {
+  const {
+    token: { colorBgContainer, borderRadiusLG },
+  } = theme.useToken();
   const [collapsed, setCollapsed] = useState(false);
 
   const location = useLocation();
@@ -49,8 +59,18 @@ const AdminTemplate = () => {
         />
       </Sider>
       <Layout>
-        <Content>
-          <Outlet />
+        <NavBarAdmin />
+        <Content style={{ margin: "24px 16px 0" }}>
+          <div
+            style={{
+              padding: 24,
+              minHeight: 360,
+              background: colorBgContainer,
+              borderRadius: borderRadiusLG,
+            }}
+          >
+            <Outlet />
+          </div>
         </Content>
       </Layout>
     </Layout>

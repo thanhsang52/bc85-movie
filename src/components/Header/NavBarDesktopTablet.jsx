@@ -16,9 +16,9 @@ export const NavBarDesktopTablet = () => {
     dispatch(setLogoutAction());
   };
   return (
-    <>
+    <div className="text-white items-center flex">
       {infoUser ? (
-        <div className="text-white">
+        <div>
           <a onClick={navigate("/info")}>{infoUser?.hoTen}</a>
           <button
             onClick={handleLogout}
@@ -28,24 +28,24 @@ export const NavBarDesktopTablet = () => {
           </button>
         </div>
       ) : (
-        <div className="text-white">
+        <div>
+          <button
+            onClick={() => navigate("/register")}
+            className="mr-2 px-2 py-1 rounded bg-white text-black"
+          >
+            Đăng ký
+          </button>
           <button
             onClick={() => {
               navigate("/login");
             }}
-            className="px-2 py-1 rounded bg-purple-400"
+            className="px-2 py-1 rounded  text-black"
           >
             Đăng nhập
           </button>
-          <button
-            onClick={() => navigate("/register")}
-            className="ml-2 px-2 py-1 rounded bg-white text-black"
-          >
-            Đăng ký
-          </button>
         </div>
       )}
-    </>
+    </div>
   );
 };
 export default NavBarDesktopTablet;

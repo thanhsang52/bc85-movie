@@ -2,6 +2,7 @@ import React from "react";
 import { userService } from "../../../service/userService";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Space, Table, Tag } from "antd";
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 
 export const AdminHomePage = () => {
   const qc = useQueryClient();
@@ -72,16 +73,19 @@ export const AdminHomePage = () => {
       render: (_, record) => (
         <div className="flex gap-2">
           {/* <button className="bg-blue-500 p-2 rounded text-white">Xem</button> */}
+
+          <button className="p-2 text-blue-600">
+            <EditOutlined />
+          </button>
           <button
             onClick={() => {
               //console.log("record", record.taiKhoan);
               mutate(record.taiKhoan);
             }}
-            className="bg-red-500 p-2 rounded text-white"
+            className="p-2 text-red-500"
           >
-            Xoá
+            <DeleteOutlined />
           </button>
-          <button className="bg-purple-400 p-2 rounded text-white">Sửa</button>
         </div>
       ),
     },
@@ -113,7 +117,7 @@ export const AdminHomePage = () => {
 
   return (
     <div className="px-10">
-      <h3 className="h3">Danh sách user</h3>
+      <h2 className="text-xl font-bold">Danh sách user</h2>
 
       <Table columns={columns} dataSource={listUser} />
     </div>
