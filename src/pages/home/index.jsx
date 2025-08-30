@@ -1,18 +1,32 @@
 import { Carousel } from "antd";
-import React from "react";
+import React, { useState } from "react";
 import CarouselMovie from "./components/CarouselMovie";
 import ListMovie from "./components/ListMovie";
 import { Section } from "../../HOC/Section";
+import Theaters from "./components/Theaters";
+import Schedule from "./components/Schedule";
 
 export const HomePage = () => {
+  const [selectedTheater, setSelectedTheater] = useState(null);
+
   return (
     <div>
       <CarouselMovie />
       <Section titleSection="Danh sách phim">
         <ListMovie />
       </Section>
-      <Section titleSection={"Lịch chiếu phim"}>
-        <div className="bg-yellow-500 h-96"></div>
+      <Section>
+        <div className="flex">
+          <div className="w-1/6">
+            <Theaters
+              onTheaterSelect={setSelectedTheater}
+              selectedTheater={selectedTheater}
+            />
+          </div>
+          <div className="w-5/6 pl-4">
+            <Schedule selectedTheater={selectedTheater} />
+          </div>
+        </div>
       </Section>
     </div>
   );
