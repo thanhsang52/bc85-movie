@@ -19,7 +19,7 @@ export const NavBarDesktopTablet = () => {
     <div className="text-white items-center flex">
       {infoUser ? (
         <div>
-          <a onClick={navigate("/info")}>{infoUser?.hoTen}</a>
+          <a onClick={() => navigate("/info")} className="cursor-pointer text-black">{infoUser?.hoTen}</a>
           <button
             onClick={handleLogout}
             className="ml-2 px-2 py-1 rounded bg-purple-400"
