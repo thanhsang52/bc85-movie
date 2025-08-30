@@ -73,7 +73,7 @@ export const ListMovie = () => {
               <img alt="example" src={movie.hinhAnh} className="!h-[250px]" />
             }
           >
-            <h3 className="mb-2">{movie.tenPhim}</h3>
+            <h3 className="mb-2 font-semibold text-center text-gray-800 leading-tight line-clamp-2 min-h-[3rem]">{movie.tenPhim}</h3>
             <Rate 
               disabled 
               value={movie.danhGia / 2} 
