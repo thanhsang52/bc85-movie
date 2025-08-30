@@ -68,9 +68,24 @@ export const ListMovie = () => {
             onClick={() => handleRedirectMovieDetailPage(movie.maPhim)}
             key={index}
             hoverable
-            // style={{ width: 240 }}
+            className="relative"
             cover={
-              <img alt="example" src={movie.hinhAnh} className="!h-[250px]" />
+              <div className="relative">
+                <img alt="example" src={movie.hinhAnh} className="!h-[250px]" />
+                {filter === 'all' && (
+                  <div className="absolute top-2 left-2 flex flex-col gap-1">
+                    {movie.hot && (
+                      <span className="bg-red-500 text-white text-xs px-2 py-1 rounded">🔥 HOT</span>
+                    )}
+                    {movie.dangChieu && (
+                      <span className="bg-green-500 text-white text-xs px-2 py-1 rounded">▶️ Đang chiếu</span>
+                    )}
+                    {movie.sapChieu && (
+                      <span className="bg-blue-500 text-white text-xs px-2 py-1 rounded">⏰ Sắp chiếu</span>
+                    )}
+                  </div>
+                )}
+              </div>
             }
           >
             <h3 className="mb-2 font-semibold text-center text-gray-800 leading-tight line-clamp-2 min-h-[3rem]">{movie.tenPhim}</h3>
