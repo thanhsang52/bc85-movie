@@ -1,15 +1,18 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { theaterService } from '../../../service/theaterService'
+import { setListTheatersAction, setSelectedTheaterAction } from '../../../stores/theater'
 
-const Theaters = ({ onTheaterSelect, selectedTheater }) => {
-  const [theaters, setTheaters] = useState([])
+const Theaters = () => {
+  const dispatch = useDispatch()
+  const { listTheaters, selectedTheater } = useSelector(state => state.theaterSlice)
 
   const fetchTheaters = async () => {
     try {
       const response = await theaterService.getListTheaters()
-      setTheaters(response.data.content)
+      dispatch(setListTheatersAction(response.data.content))
       if (response.data.content.length > 0 && !selectedTheater) {
-        onTheaterSelect(response.data.content[0].maHeThongRap)
+        dispatch(setSelectedTheaterAction(response.data.content[0].maHeThongRap))
       }
     } catch (error) {
       console.log(error)
@@ -22,13 +25,13 @@ const Theaters = ({ onTheaterSelect, selectedTheater }) => {
 
   return (
     <div className="flex flex-col space-y-4">
-      {theaters.map((theater) => (
+      {listTheaters.map((theater) => (
         <div 
           key={theater.maHeThongRap} 
           className={`flex justify-center p-2 cursor-pointer rounded ${
             selectedTheater === theater.maHeThongRap ? 'bg-blue-100 border-2 border-blue-500' : 'hover:bg-gray-100'
           }`}
-          onClick={() => onTheaterSelect(theater.maHeThongRap)}
+          onClick={() => dispatch(setSelectedTheaterAction(theater.maHeThongRap))}
         >
           <img 
             src={theater.logo} 

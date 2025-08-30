@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { theaterService } from "../../../service/theaterService";
+import { setSchedulesAction } from "../../../stores/theater";
 import { Collapse } from "antd";
 
-const Schedule = ({ selectedTheater }) => {
-  const [schedules, setSchedules] = useState([]);
+const Schedule = () => {
+  const dispatch = useDispatch();
+  const { schedules, selectedTheater } = useSelector(state => state.theaterSlice);
   const [selectedCinema, setSelectedCinema] = useState(null);
 
   const fetchSchedules = async () => {
     if (!selectedTheater) return;
     try {
       const response = await theaterService.getListSchedules(selectedTheater);
-      setSchedules(response.data.content);
+      dispatch(setSchedulesAction(response.data.content));
       if (
         response.data.content.length > 0 &&
         response.data.content[0].lstCumRap.length > 0

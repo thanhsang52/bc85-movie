@@ -7,8 +7,6 @@ import Theaters from "./components/Theaters";
 import Schedule from "./components/Schedule";
 
 export const HomePage = () => {
-  const [selectedTheater, setSelectedTheater] = useState(null);
-
   return (
     <div>
       <CarouselMovie />
@@ -18,13 +16,10 @@ export const HomePage = () => {
       <Section>
         <div className="flex">
           <div className="w-1/6">
-            <Theaters
-              onTheaterSelect={setSelectedTheater}
-              selectedTheater={selectedTheater}
-            />
+            <Theaters />
           </div>
           <div className="w-5/6 pl-4">
-            <Schedule selectedTheater={selectedTheater} />
+            <Schedule />
           </div>
         </div>
       </Section>
