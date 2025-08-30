@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setListMovieAction } from "../../../stores/movie/index.js";
 import { movieService } from "../../../service/movieService";
-import { Card } from "antd";
+import { Card, Rate } from "antd";
 import { useNavigate } from "react-router-dom";
 export const ListMovie = () => {
   const dispatch = useDispatch();
@@ -38,7 +38,13 @@ export const ListMovie = () => {
               <img alt="example" src={movie.hinhAnh} className="!h-[250px]" />
             }
           >
-            <h3>{movie.tenPhim}</h3>
+            <h3 className="mb-2">{movie.tenPhim}</h3>
+            <Rate 
+              disabled 
+              value={movie.danhGia / 2} 
+              allowHalf 
+              className="text-sm"
+            />
           </Card>
         );
       })}
