@@ -15,13 +15,21 @@ export const HeaderPage = () => {
       />
 
       <ul className="flex gap-5 text-lg justify-between items-center">
-        <li className="hover:text-purple-400 cursor-pointer">Trang chủ</li>
+        <li className="hover:text-purple-400 cursor-pointer">
+          <a href="/">Trang chủ</a>
+        </li>
         <li className="">|</li>
-        <li className="hover:text-purple-400 cursor-pointer">Liên hệ</li>
+        <li className="hover:text-purple-400 cursor-pointer">
+          <a href="/contact">Liên hệ</a>
+        </li>
         <li className="">|</li>
-        <li className="hover:text-purple-400 cursor-pointer">Tin tức</li>
+        <li className="hover:text-purple-400 cursor-pointer">
+          <a href="/news">Tin tức</a>
+        </li>
         <li className="">|</li>
-        <li className="hover:text-purple-400 cursor-pointer">Ứng dụng</li>
+        <li className="hover:text-purple-400 cursor-pointer">
+          <a href="/app">Ứng dụng</a>
+        </li>
       </ul>
       {isDesktop && <NavBarDesktopTablet />}
       {isTablet && <NavBarDesktopTablet />}

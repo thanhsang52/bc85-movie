@@ -10,6 +10,9 @@ import UserInfoPage from "../pages/info-user";
 import AdminTemplate from "../templates/AdminTemplate";
 import AdminHomePage from "../pages/admin/home";
 import MovieAdminPage from "../pages/admin/movie";
+import ContactPage from "../pages/contact";
+import NewsPage from "../pages/news";
+import AppPage from "../pages/app";
 
 const routers = [
   {
@@ -38,6 +41,18 @@ const routers = [
             <UserInfoPage />,
           </AuthCheck>
         ),
+      },
+      {
+        path: "/contact",
+        element: <ContactPage />,
+      },
+      {
+        path: "/news",
+        element: <NewsPage />,
+      },
+      {
+        path: "/app",
+        element: <AppPage />,
       },
     ],
   },
