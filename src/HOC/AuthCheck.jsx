@@ -9,11 +9,13 @@ export const roleUser = {
 export const AuthCheck = ({ children, needLogin, pagePermission }) => {
   const { infoUser } = useSelector((state) => state.userSlice);
   const location = useLocation();
-  // If user is logged in and is an admin, redirect to admin page
+  // If user is logged in and is an admin, only redirect to admin if not already on admin pages
   if (
     infoUser?.maLoaiNguoiDung == roleUser.ADMIN &&
     infoUser &&
-    !location.pathname.startsWith("/admin")
+    !location.pathname.startsWith("/admin") &&
+    !needLogin &&
+    !pagePermission
   ) {
     return <Navigate to="/admin" replace />;
   }

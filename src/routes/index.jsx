@@ -103,8 +103,8 @@ const routers = [
       {
         path: "movie",
         element: (
-          <AuthCheck isNeedLogin={true} pagePermission={roleUser.ADMIN}>
-            <MovieAdminPage />,
+          <AuthCheck needLogin={true} pagePermission={roleUser.ADMIN}>
+            <MovieAdminPage />
           </AuthCheck>
         ),
       },
