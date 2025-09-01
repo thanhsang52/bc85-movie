@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { UserOutlined, LogoutOutlined } from "@ant-design/icons";
+import { UserOutlined, LogoutOutlined, HomeOutlined } from "@ant-design/icons";
 import { Layout, Menu, theme, Dropdown, Avatar } from "antd";
 import { setLogoutAction } from "../../stores/user";
 import { Header, Content } from "antd/es/layout/layout";
@@ -38,6 +38,14 @@ const NavBarAdmin = () => {
                 key: "profile",
                 icon: <UserOutlined />,
                 label: "Profile",
+              },
+              {
+                key: "homepage",
+                icon: <HomeOutlined />,
+                label: "Home",
+                onClick: () => {
+                  navigate("/");
+                },
               },
               {
                 key: "logout",
