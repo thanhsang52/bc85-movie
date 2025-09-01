@@ -6,7 +6,9 @@ export const movieService = {
   getMovieDetail: (movieId) => {
     return axiosCustom.get(`/QuanLyPhim/LayThongTinPhim?MaPhim=${movieId}`);
   },
-  createMovie: (movie) => axiosCustom.post("/movies", movie),
-  updateMovie: (id, movie) => axiosCustom.put(`/movies/${id}`, movie),
-  deleteMovie: (id) => axiosCustom.delete(`/movies/${id}`),
+  createMovie: (movie) =>
+    axiosCustom.post("/QuanLyPhim/ThemPhimUploadHinh", movie),
+  updateMovie: (payload) =>
+    axiosCustom.post(`/QuanLyPhim/CapNhatPhimUpload`, payload),
+  deleteMovie: (id) => axiosCustom.delete(`/QuanLyPhim/XoaPhim?MaPhim=${id}`),
 };

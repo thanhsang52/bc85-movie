@@ -9,6 +9,7 @@ const MovieAdminPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingMovie, setEditingMovie] = useState(null);
   const [form] = Form.useForm();
+  const [fileList, setFileList] = useState([]);
 
   const fetchMovies = async () => {
     setLoading(true);
@@ -29,6 +30,7 @@ const MovieAdminPage = () => {
   const handleAdd = () => {
     setEditingMovie(null);
     form.resetFields();
+    setFileList([]);
     setIsModalOpen(true);
   };
 
@@ -53,23 +55,44 @@ const MovieAdminPage = () => {
 
   const handleSubmit = async (values) => {
     try {
-      const movieData = {
-        ...values,
-        maNhom: 'GP01'
-      };
-
+      const formData = new FormData();
+      
+      // Add required fields
+      formData.append('tenPhim', values.tenPhim);
+      formData.append('trailer', values.trailer);
+      formData.append('moTa', values.moTa);
+      
+      // Convert date format from yyyy-mm-dd to dd/MM/yyyy
+      const dateObj = new Date(values.ngayKhoiChieu);
+      const formattedDate = `${dateObj.getDate().toString().padStart(2, '0')}/${(dateObj.getMonth() + 1).toString().padStart(2, '0')}/${dateObj.getFullYear()}`;
+      formData.append('ngayKhoiChieu', formattedDate);
+      
+      formData.append('danhGia', values.danhGia);
+      formData.append('hot', values.hot || false);
+      formData.append('dangChieu', values.dangChieu || false);
+      formData.append('sapChieu', values.sapChieu || false);
+      formData.append('maNhom', 'GP01');
+      
+      // Add file if exists
+      if (values.File) {
+        formData.append('File', values.File);
+      }
+      
       if (editingMovie) {
-        await movieService.updateMovie({ ...movieData, maPhim: editingMovie.maPhim });
+        formData.append('maPhim', editingMovie.maPhim);
+        await movieService.updateMovie(formData);
         message.success('Cập nhật phim thành công');
       } else {
-        await movieService.addMovie(movieData);
+        await movieService.createMovie(formData);
         message.success('Thêm phim thành công');
       }
       
       setIsModalOpen(false);
+      setFileList([]);
       fetchMovies();
     } catch (error) {
-      message.error(editingMovie ? 'Cập nhật phim thất bại' : 'Thêm phim thất bại');
+      console.log('Error:', error.response?.data);
+      message.error(error.response?.data?.content || (editingMovie ? 'Cập nhật phim thất bại' : 'Thêm phim thất bại'));
     }
   };
 
@@ -179,9 +202,13 @@ const MovieAdminPage = () => {
       <Modal
         title={editingMovie ? 'Sửa phim' : 'Thêm phim'}
         open={isModalOpen}
-        onCancel={() => setIsModalOpen(false)}
+        onCancel={() => {
+          console.log('Modal closing');
+          setIsModalOpen(false);
+        }}
         footer={null}
         width={600}
+        destroyOnClose
       >
         <Form
           form={form}
@@ -206,10 +233,29 @@ const MovieAdminPage = () => {
 
           <Form.Item
             label="Hình ảnh"
-            name="hinhAnh"
-            rules={[{ required: true, message: 'Vui lòng nhập link hình ảnh!' }]}
+            name="File"
+            rules={[{ required: !editingMovie, message: 'Vui lòng chọn hình ảnh!' }]}
           >
-            <Input placeholder="https://..." />
+            <Upload
+              listType="picture-card"
+              fileList={fileList}
+              beforeUpload={() => false}
+              onChange={({ fileList: newFileList }) => {
+                setFileList(newFileList);
+                if (newFileList.length > 0) {
+                  form.setFieldsValue({ File: newFileList[0].originFileObj });
+                }
+              }}
+              maxCount={1}
+              accept=".jpg,.jpeg,.png,.gif"
+            >
+              {fileList.length < 1 && (
+                <div>
+                  <PlusOutlined />
+                  <div style={{ marginTop: 8 }}>Upload</div>
+                </div>
+              )}
+            </Upload>
           </Form.Item>
 
           <Form.Item
