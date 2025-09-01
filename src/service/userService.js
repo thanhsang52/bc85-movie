@@ -24,4 +24,10 @@ export const userService = {
       `/QuanLyNguoiDung/XoaNguoiDung?taiKhoan=${taiKhoan}`
     );
   },
+  addUser: (userData) => {
+    return axiosCustom.post("/QuanLyNguoiDung/ThemNguoiDung", userData);
+  },
+  searchUser: (keyword) => {
+    return axiosCustom.get(`/QuanLyNguoiDung/TimKiemNguoiDung?MaNhom=GP01&tuKhoa=${keyword}`);
+  },
 };
