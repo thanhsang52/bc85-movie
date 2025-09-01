@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { movieService } from "../../service/movieService";
 import { theaterService } from "../../service/theaterService";
 import { Rate, Collapse, Button, Modal } from "antd";
 
 export const MovieDetailPage = () => {
   const { movieId } = useParams();
+  const navigate = useNavigate();
   const [movieDetail, setMovieDetail] = useState(null);
   const [theaters, setTheaters] = useState([]);
   const [selectedTheater, setSelectedTheater] = useState(null);
@@ -323,6 +324,9 @@ export const MovieDetailPage = () => {
                         <button
                           key={lichChieu.maLichChieu}
                           className="p-2 border rounded text-sm hover:bg-blue-100 hover:border-blue-500"
+                          onClick={() =>
+                            navigate(`/ticketroom/${lichChieu.maLichChieu}`)
+                          }
                         >
                           {new Date(lichChieu.ngayChieuGioChieu).toLocaleString(
                             "vi-VN",

@@ -13,6 +13,7 @@ import MovieAdminPage from "../pages/admin/movie";
 import ContactPage from "../pages/contact";
 import NewsPage from "../pages/news";
 import AppPage from "../pages/app";
+import TicketRoomPage from "../pages/ticket";
 
 const routers = [
   {
@@ -30,6 +31,15 @@ const routers = [
         element: (
           <AuthCheck needLogin={true}>
             <MovieDetailPage />,
+          </AuthCheck>
+        ),
+      },
+      {
+        path: "/ticketroom/:id",
+        // element: <MovieDetailPage />,
+        element: (
+          <AuthCheck needLogin={true}>
+            <TicketRoomPage />,
           </AuthCheck>
         ),
       },
