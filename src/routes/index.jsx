@@ -10,6 +10,8 @@ import UserInfoPage from "../pages/info-user";
 import AdminTemplate from "../templates/AdminTemplate";
 import AdminHomePage from "../pages/admin/home";
 import MovieAdminPage from "../pages/admin/movie";
+import ScheduleAdminPage from "../pages/admin/schedule";
+import UserAdminPage from "../pages/admin/user";
 import ContactPage from "../pages/contact";
 import NewsPage from "../pages/news";
 import AppPage from "../pages/app";
@@ -96,7 +98,7 @@ const routers = [
         path: "",
         element: (
           <AuthCheck needLogin={true} pagePermission={roleUser.ADMIN}>
-            <AdminHomePage />
+            <UserAdminPage />
           </AuthCheck>
         ),
       },
@@ -105,6 +107,22 @@ const routers = [
         element: (
           <AuthCheck needLogin={true} pagePermission={roleUser.ADMIN}>
             <MovieAdminPage />
+          </AuthCheck>
+        ),
+      },
+      {
+        path: "schedule",
+        element: (
+          <AuthCheck needLogin={true} pagePermission={roleUser.ADMIN}>
+            <ScheduleAdminPage />
+          </AuthCheck>
+        ),
+      },
+      {
+        path: "user",
+        element: (
+          <AuthCheck needLogin={true} pagePermission={roleUser.ADMIN}>
+            <UserAdminPage />
           </AuthCheck>
         ),
       },
