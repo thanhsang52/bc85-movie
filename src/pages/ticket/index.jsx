@@ -1,17 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { Button, message } from "antd";
 import { theaterService } from "../../service/theaterService";
+import { setTicketRoomAction, addSeatAction, removeSeatAction } from "../../stores/theater";
 
 const TicketRoomPage = () => {
   const { id } = useParams();
-  const [ticketRoom, setTicketRoom] = useState(null);
-  const [selectedSeats, setSelectedSeats] = useState([]);
+  const dispatch = useDispatch();
+  const { ticketRoom, selectedSeats } = useSelector(state => state.theaterSlice);
 
   const fetchTicketRoom = async () => {
     try {
       const response = await theaterService.getTicketRoom(id);
-      setTicketRoom(response.data.content);
+      dispatch(setTicketRoomAction(response.data.content));
     } catch (error) {
       console.log(error);
       message.error("Không thể tải thông tin phòng vé");
@@ -27,9 +29,9 @@ const TicketRoomPage = () => {
 
     const seatIndex = selectedSeats.findIndex((s) => s.maGhe === seat.maGhe);
     if (seatIndex > -1) {
-      setSelectedSeats(selectedSeats.filter((s) => s.maGhe !== seat.maGhe));
+      dispatch(removeSeatAction(seat.maGhe));
     } else {
-      setSelectedSeats([...selectedSeats, seat]);
+      dispatch(addSeatAction(seat));
     }
   };
 

@@ -4,6 +4,8 @@ const initialState = {
   listTheaters: [],
   schedules: [],
   selectedTheater: null,
+  ticketRoom: null,
+  selectedSeats: [],
 };
 
 const theaterSlice = createSlice({
@@ -19,9 +21,33 @@ const theaterSlice = createSlice({
     setSelectedTheaterAction: (state, action) => {
       state.selectedTheater = action.payload;
     },
+    setTicketRoomAction: (state, action) => {
+      state.ticketRoom = action.payload;
+    },
+    setSelectedSeatsAction: (state, action) => {
+      state.selectedSeats = action.payload;
+    },
+    addSeatAction: (state, action) => {
+      state.selectedSeats.push(action.payload);
+    },
+    removeSeatAction: (state, action) => {
+      state.selectedSeats = state.selectedSeats.filter(seat => seat.maGhe !== action.payload);
+    },
+    clearSelectedSeatsAction: (state) => {
+      state.selectedSeats = [];
+    },
   },
 });
 
-export const { setListTheatersAction, setSchedulesAction, setSelectedTheaterAction } = theaterSlice.actions;
+export const { 
+  setListTheatersAction, 
+  setSchedulesAction, 
+  setSelectedTheaterAction,
+  setTicketRoomAction,
+  setSelectedSeatsAction,
+  addSeatAction,
+  removeSeatAction,
+  clearSelectedSeatsAction
+} = theaterSlice.actions;
 
 export default theaterSlice.reducer;
