@@ -20,15 +20,19 @@ function getItem(label, key, icon, children) {
   };
 }
 const items = [
-  getItem(<NavLink to="/admin">Users</NavLink>, "/admin", <UserOutlined />),
+  getItem(
+    <NavLink to="/admin/user">Users</NavLink>,
+    "/admin/user",
+    <UserOutlined />
+  ),
   getItem(
     <NavLink to="/admin/movie">Films</NavLink>,
     "/admin/movie",
     <VideoCameraOutlined />
   ),
   getItem(
-    <NavLink to="">Showtime</NavLink>,
-    "/admin/movie",
+    <NavLink to="/admin/schedule">Showtime</NavLink>,
+    "/admin/schedule",
     <DesktopOutlined />
   ),
 ];
@@ -49,10 +53,23 @@ const AdminTemplate = () => {
         collapsed={collapsed}
         onCollapse={(value) => setCollapsed(value)}
       >
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            padding: "16px 8px 0 8px",
+          }}
+        >
+          <img
+            width="60"
+            height="60"
+            alt="BC85 MOVIE"
+            src="https://i.imgur.com/lC22izJ.png"
+          />
+        </div>
         <div className="demo-logo-vertical" />
         <Menu
           theme="dark"
-          // defaultSelectedKeys={["1"]}
           selectedKeys={[location.pathname]}
           mode="inline"
           items={items}
