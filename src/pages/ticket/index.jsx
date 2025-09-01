@@ -1,14 +1,17 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, message } from "antd";
 import { theaterService } from "../../service/theaterService";
-import { setTicketRoomAction, addSeatAction, removeSeatAction } from "../../stores/theater";
+import { setTicketRoomAction, addSeatAction, removeSeatAction, clearSelectedSeatsAction } from "../../stores/theater";
+import { useSelector as useUserSelector } from "react-redux";
 
 const TicketRoomPage = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const { ticketRoom, selectedSeats } = useSelector(state => state.theaterSlice);
+  const { infoUser } = useUserSelector(state => state.userSlice);
+  const [loading, setLoading] = useState(false);
 
   const fetchTicketRoom = async () => {
     try {
@@ -44,6 +47,35 @@ const TicketRoomPage = () => {
   };
 
   const totalPrice = selectedSeats.reduce((sum, seat) => sum + seat.giaVe, 0);
+
+  const handleBookTicket = async () => {
+    if (selectedSeats.length === 0) {
+      message.warning('Vui lòng chọn ghế!');
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const ticketData = {
+        maLichChieu: parseInt(id),
+        danhSachVe: selectedSeats.map(seat => ({
+          maGhe: seat.maGhe,
+          giaVe: seat.giaVe
+        }))
+      };
+
+      await theaterService.bookTicket(ticketData);
+      message.success('Đặt vé thành công!');
+      dispatch(clearSelectedSeatsAction());
+      // Refresh ticket room data
+      fetchTicketRoom();
+    } catch (error) {
+      console.log(error);
+      message.error('Đặt vé thất bại: ' + (error.response?.data?.content || 'Vui lòng thử lại'));
+    } finally {
+      setLoading(false);
+    }
+  };
 
   if (!ticketRoom) return <div>Loading...</div>;
 
@@ -170,6 +202,8 @@ const TicketRoomPage = () => {
               size="large"
               className="w-full"
               disabled={selectedSeats.length === 0}
+              loading={loading}
+              onClick={handleBookTicket}
             >
               Đặt vé ({selectedSeats.length} ghế)
             </Button>
