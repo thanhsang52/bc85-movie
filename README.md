@@ -10,3 +10,8 @@ npm in antd
 npm i @reduxjs/toolkit
 npm i react-redux
 npm i react-router-dom
+
+# Accounts
+
+Customer: user3211/123123
+Admin: sang/123456
